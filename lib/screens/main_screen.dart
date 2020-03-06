@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:weatherapp/screens/main_content.dart';
+
 class MyHomePage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,14 +16,15 @@ class MyHomePage extends StatelessWidget {
               final city = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  //builder: (context) => CitySelection(),
+                  builder: (context) => MainContent(),
                 ),
               );
-              if (city != null) {
-//                BlocProvider.of<WeatherBloc>(context)
-//                    .add(FetchWeather(city: city));
+              if (city != null && city.length > 0) {
+                // todo...
+                print(city.length);
+                print(city);
               }
-            },
+            }
           )
         ],
       ),
