@@ -8,6 +8,8 @@ class Sun {
   int sunrise;
   int sunset;
   Sun({this.sunrise, this.sunset});
+
+  // https://flutter.dev/docs/development/data-and-backend/json
   factory Sun.fromJson(Map<String, dynamic> json) => _$SunFromJson(json);
   Map<String, dynamic> toJson() => _$SunToJson(this);
 

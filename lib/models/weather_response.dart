@@ -14,6 +14,7 @@ class WeatherResponse {
   String name;
 
   WeatherResponse({this.weather, this.sun, this.main});
+  //https://flutter.dev/docs/development/data-and-backend/json
   factory WeatherResponse.fromJson(Map<String, dynamic> json) => _$WeatherResponseFromJson(json);
   Map<String, dynamic> toJson() => _$WeatherResponseToJson(this);
 }

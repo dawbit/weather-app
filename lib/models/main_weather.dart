@@ -15,6 +15,8 @@ class MainWeather {
   @JsonKey(name: 'pressure')
   double pressure;
   MainWeather({this.feelsLike, this.pressure, this.temperature, this.tempMax, this.tempMin});
+
+  //  https://flutter.dev/docs/development/data-and-backend/json
   factory MainWeather.fromJson(Map<String, dynamic> json) => _$MainWeatherFromJson(json);
   Map<String, dynamic> toJson() => _$MainWeatherToJson(this);
 }
