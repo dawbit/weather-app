@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:weatherapp/screens/main_content.dart';
 
 import 'package:weatherapp/screens/main_screen.dart';
 import 'package:weatherapp/blocks/weather_block.dart';
@@ -19,13 +20,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MyHomePage(),
+        home: MainContent(),
       ),
     );
   }
 
   List<Bloc> get _blocs => [
-    Bloc((_) => WeatherBloc())
+    Bloc((i) => WeatherBloc(i.get()))
   ]; // Block
 
   List<Dependency> get _dependencies => [

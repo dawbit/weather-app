@@ -1,10 +1,11 @@
 import 'dart:async';
-
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:weatherapp/screens/main_screen.dart';
+import 'package:weatherapp/blocks/weather_block.dart';
+import 'package:weatherapp/models/weather_response.dart';
+import 'package:weatherapp/screens/weather_details.dart';
 
 class MainContent extends StatefulWidget {
   @override
@@ -13,12 +14,54 @@ class MainContent extends StatefulWidget {
 
 class MainContentState extends State<MainContent> {
   TextEditingController _searchController;
+  WeatherBloc _weatherBloc;
+  StreamSubscription _weatherSubscription;
 
   @override
   void initState() {
     super.initState();
     _searchController = TextEditingController();
+    _weatherBloc = BlocProvider.getBloc();
+    _weatherSubscription = _weatherBloc.weatherObservable.listen(_navigateToDetails);
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _weatherSubscription.cancel();
+  }
+
+  Widget get _content => StreamBuilder<List<String>>(
+      //stream: _citiesBloc.citiesObservable,
+      builder: (context, snapshot) {
+        return CustomScrollView(
+          slivers: <Widget>[
+            //_header,
+            //_getCitiesList(snapshot)
+          ],
+        );
+      }
+  );
+
+  Widget get _loader => StreamBuilder<bool>(
+    stream: _weatherBloc.loadingWeatherObservable,
+    initialData: false,
+    builder: (context, snapshot) {
+      if(snapshot.data) {
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.grey.withAlpha(100),
+          ),
+          child: CircularProgressIndicator(),
+        );
+      } else {
+        return Container();
+      }
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +86,16 @@ class MainContentState extends State<MainContent> {
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                Navigator.pop(context, _searchController.text);
-                return _searchController.text;
+                _weatherBloc.getWeatherForCity(_searchController.text);
               },
             )
           ],
         ),
       ),
     );
+  }
+
+  void _navigateToDetails(WeatherResponse weather) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => WeatherDetailsScreen(weather)));
   }
 }
