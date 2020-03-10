@@ -33,30 +33,28 @@ class WeatherDetailsScreen extends StatelessWidget {
         ),
       ),
       Positioned(
-        top: 8,
-        left: 8,
         child: SafeArea(
           child: Material(
             color: Theme.of(context).primaryColor,
+            child: Column(
+              children: <Widget>[
+                _mainInfo
+              ]
+            ),
           ),
         ),
-      ),
-      Center(
-          child: _icon
-      ),
-      Center(
-        child: _description
       ),
     ],
   );
 
   Widget get _detailsCard => Card(
-    margin: const EdgeInsets.all(16.0),
+    margin: const EdgeInsets.all(30.0),
     child: Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(30.0),
       child: Column(
         children: <Widget>[
           _temperature,
+          _temperatureDetails,
           _pressure,
           _sunriseSunset
         ],
@@ -64,15 +62,35 @@ class WeatherDetailsScreen extends StatelessWidget {
     ),
   );
 
-  Widget get _cityName => Text(_weather.name);
-  Widget get _icon => Text(_weather.weather.first.icon);
-  Widget get _description => Text(_weather.weather.first.description);
-  Widget get _temperature => Text(_weather.main.temperature.toString());
-  Widget get _pressure => Text(_weather.main.pressure.toString());
+  Widget get _cityName => Text(_weather.name + ', ');
+
+  Widget get _mainInfo => Text(
+      _weather.weather.first.icon + _weather.weather.first.description
+  );
+
+  Widget get _temperature => Text(
+      'Temperature: ' + _weather.main.temperature.toString() + '\u00b0C',
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)
+  );
+
+  Widget get _temperatureDetails => Text(
+      'Sensed temperature: ' + _weather.main.feelsLike.toString() + '\u00b0C'
+      +'\nMinimum temperature: ' + _weather.main.tempMin.toString() + '\u00b0C'
+      +'\nMaximum temperature: ' + _weather.main.tempMin.toString() + '\u00b0C',
+    style: TextStyle(fontSize: 18)
+  );
+
+  Widget get _pressure => Text(
+      'Pressure: ' + _weather.main.pressure.toString() + ' hPa',
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)
+  );
 
   Widget get _sunriseSunset => Text(
-      ('Wschód słońca: '+ _weather.sun.formattedSunrise +
-      '\nZachód słońca: '+_weather.sun.formattedSunset)
+      'Sunrise: '+ _weather.sun.formattedSunrise +
+      '\nSunset: '+_weather.sun.formattedSunset,
+      style: TextStyle(fontSize: 18)
   );
+
+  //todo kraj, niebieska czesc (ikona + opis + styl), dolna (styl + czas);
 
 }
