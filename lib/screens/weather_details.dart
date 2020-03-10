@@ -10,6 +10,9 @@ class WeatherDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: _cityName
+      ),
       body: Column(
         children: <Widget>[
           _getTopContainer(context),
@@ -23,7 +26,7 @@ class WeatherDetailsScreen extends StatelessWidget {
     children: <Widget>[
       Container(
         width: double.infinity,
-        height: MediaQuery.of(context).size.longestSide * 0.4,
+        height: MediaQuery.of(context).size.longestSide * 0.3,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: Theme.of(context).primaryColor
@@ -35,13 +38,15 @@ class WeatherDetailsScreen extends StatelessWidget {
         child: SafeArea(
           child: Material(
             color: Theme.of(context).primaryColor,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.white,),
-              onPressed: Navigator.of(context).pop,
-            ),
           ),
         ),
-      )
+      ),
+      Center(
+          child: _icon
+      ),
+      Center(
+        child: _description
+      ),
     ],
   );
 
@@ -51,13 +56,23 @@ class WeatherDetailsScreen extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: <Widget>[
-          _cityName,
-          SizedBox(height: 16,)
+          _temperature,
+          _pressure,
+          _sunriseSunset
         ],
       ),
     ),
   );
 
   Widget get _cityName => Text(_weather.name);
+  Widget get _icon => Text(_weather.weather.first.icon);
+  Widget get _description => Text(_weather.weather.first.description);
+  Widget get _temperature => Text(_weather.main.temperature.toString());
+  Widget get _pressure => Text(_weather.main.pressure.toString());
+
+  Widget get _sunriseSunset => Text(
+      ('Wschód słońca: '+ _weather.sun.formattedSunrise +
+      '\nZachód słońca: '+_weather.sun.formattedSunset)
+  );
 
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:weatherapp/screens/main_content.dart';
 
-import 'package:weatherapp/screens/main_screen.dart';
 import 'package:weatherapp/blocks/weather_block.dart';
 import 'package:weatherapp/repositories/weather_repository.dart';
 
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
       dependencies: _dependencies,
       child: MaterialApp(
         title: 'Weather-App',
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
