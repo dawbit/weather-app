@@ -29,19 +29,13 @@ class WeatherDetailsScreen extends StatelessWidget {
         height: MediaQuery.of(context).size.longestSide * 0.3,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor
-        ),
-      ),
-      Positioned(
-        child: SafeArea(
-          child: Material(
             color: Theme.of(context).primaryColor,
-            child: Column(
-              children: <Widget>[
-                _mainInfo
-              ]
-            ),
-          ),
+        ),
+        child: Column(
+          children: <Widget>[
+            _image,
+            _mainInfo
+          ],
         ),
       ),
     ],
@@ -56,16 +50,23 @@ class WeatherDetailsScreen extends StatelessWidget {
           _temperature,
           _temperatureDetails,
           _pressure,
-          _sunriseSunset
+          _windInfo,
+          _sunriseSunset,
         ],
       ),
     ),
   );
 
-  Widget get _cityName => Text(_weather.name + ', ');
+  Widget get _cityName => Text(_weather.name + ', '+_weather.sun.country);
+
+  Widget get _image => Image.network(
+    'http://openweathermap.org/img/wn/'+_weather.weather.first.icon+'@2x.png',
+    scale: 0.6,
+  );
 
   Widget get _mainInfo => Text(
-      _weather.weather.first.icon + _weather.weather.first.description
+      _weather.weather.first.description,
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white),
   );
 
   Widget get _temperature => Text(
@@ -85,12 +86,15 @@ class WeatherDetailsScreen extends StatelessWidget {
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)
   );
 
+  Widget get _windInfo => Text(
+      'Wind speed: '+_weather.wind.speed.toString()+' kmph',
+      style: TextStyle(fontSize: 18)
+  );
+
   Widget get _sunriseSunset => Text(
       'Sunrise: '+ _weather.sun.formattedSunrise +
       '\nSunset: '+_weather.sun.formattedSunset,
       style: TextStyle(fontSize: 18)
   );
-
-  //todo kraj, niebieska czesc (ikona + opis + styl), dolna (styl + czas);
 
 }

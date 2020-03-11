@@ -1,5 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:intl/intl.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'sun.g.dart';
 
@@ -7,7 +7,8 @@ part 'sun.g.dart';
 class Sun {
   int sunrise;
   int sunset;
-  Sun({this.sunrise, this.sunset});
+  String country;
+  Sun({this.sunrise, this.sunset, this.country});
 
   // https://flutter.dev/docs/development/data-and-backend/json
   factory Sun.fromJson(Map<String, dynamic> json) => _$SunFromJson(json);

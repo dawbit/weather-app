@@ -10,10 +10,12 @@ Sun _$SunFromJson(Map<String, dynamic> json) {
   return Sun(
     sunrise: json['sunrise'] as int,
     sunset: json['sunset'] as int,
+    country: json['country'] as String,
   );
 }
 
 Map<String, dynamic> _$SunToJson(Sun instance) => <String, dynamic>{
       'sunrise': instance.sunrise,
       'sunset': instance.sunset,
+      'country': instance.country,
     };
